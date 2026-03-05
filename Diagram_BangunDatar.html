@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Class Bangun Datar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .diagram-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+
+        .class-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .abstract-class {
+            background: #f8f9fa;
+            border: 3px solid #dc3545;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(220,53,69,0.3);
+        }
+
+        .abstract-class::after {
+            content: "<<abstract>>";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc3545;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .class-box {
+            background: #f8f9fa;
+            border: 3px solid #28a745;
+            border-radius: 15px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+        }
+
+        .inheritance-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .children-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .class-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .attributes, .methods {
+            text-align: left;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .attributes {
+            color: #856404;
+        }
+
+        .methods {
+            color: #004085;
+        }
+
+        .attribute-item {
+            padding: 3px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .method-item {
+            padding: 3px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .protected {
+            color: #b5651e;
+            font-weight: bold;
+        }
+
+        .public {
+            color: #1e7e34;
+            font-weight: bold;
+        }
+
+        .abstract-method {
+            font-style: italic;
+            color: #721c24;
+        }
+
+        .arrow {
+            font-size: 30px;
+            color: #666;
+        }
+
+        .info-panel {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .info-item h3 {
+            margin-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+        }
+
+        .info-item ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .info-item li {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+
+        .badge-protected {
+            background: #b5651e;
+            color: white;
+        }
+
+        .badge-public {
+            background: #1e7e34;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .class-box {
+                width: 200px;
+            }
+            .abstract-class {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 DIAGRAM CLASS BANGUN DATAR</h1>
+        <div class="subtitle">Kalkulator Bangun Datar dengan Public & Protected Modifier</div>
+
+        <div class="diagram-container">
+            <div class="class-diagram">
+                <!-- Abstract Class -->
+                <div class="abstract-class">
+                    <div class="class-title">«abstract»<br>BangunDatar</div>
+                    <div class="attributes">
+                        <div class="attribute-item"><span class="badge badge-protected">protected</span> nama : String</div>
+                    </div>
+                    <div class="methods">
+                        <div class="method-item"><span class="badge badge-public">public</span> + BangunDatar()</div>
+                        <div class="method-item"><span class="badge badge-public">public</span> + getNama()</div>
+                        <div class="method-item"><span class="badge badge-public">public</span> + setNama()</div>
+                        <div class="method-item"><span class="badge badge-public">public</span> «abstract» hitungLuas()</div>
+                        <div class="method-item"><span class="badge badge-public">public</span> «abstract» hitungKeliling()</div>
+                        <div class="method-item"><span class="badge badge-public">public</span> + tampilkanInfo()</div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="arrow">▼</div>
+
+                <!-- Child Classes -->
+                <div class="children-container">
+                    <!-- Persegi -->
+                    <div class="class-box">
+                        <div class="class-title">Persegi</div>
+                        <div class="attributes">
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> sisi : double</div>
+                        </div>
+                        <div class="methods">
+                            <div class="method-item"><span class="badge badge-public">public</span> + Persegi()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setSisi()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + getSisi()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungLuas()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungKeliling()</div>
+                        </div>
+                    </div>
+
+                    <!-- Persegi Panjang -->
+                    <div class="class-box">
+                        <div class="class-title">PersegiPanjang</div>
+                        <div class="attributes">
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> panjang : double</div>
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> lebar : double</div>
+                        </div>
+                        <div class="methods">
+                            <div class="method-item"><span class="badge badge-public">public</span> + PersegiPanjang()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setPanjang()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setLebar()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungLuas()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungKeliling()</div>
+                        </div>
+                    </div>
+
+                    <!-- Segitiga -->
+                    <div class="class-box">
+                        <div class="class-title">Segitiga</div>
+                        <div class="attributes">
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> alas : double</div>
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> tinggi : double</div>
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> sisiA/B/C : double</div>
+                        </div>
+                        <div class="methods">
+                            <div class="method-item"><span class="badge badge-public">public</span> + Segitiga()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setAlas()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setTinggi()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungLuas()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungKeliling()</div>
+                        </div>
+                    </div>
+
+                    <!-- Lingkaran -->
+                    <div class="class-box">
+                        <div class="class-title">Lingkaran</div>
+                        <div class="attributes">
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> jariJari : double</div>
+                            <div class="attribute-item"><span class="badge badge-protected">protected</span> PHI : final double</div>
+                        </div>
+                        <div class="methods">
+                            <div class="method-item"><span class="badge badge-public">public</span> + Lingkaran()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + setJariJari()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + getJariJari()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungLuas()</div>
+                            <div class="method-item"><span class="badge badge-public">public</span> + hitungKeliling()</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informasi Modifier -->
+            <div class="info-panel">
+                <h2 style="text-align: center; margin-bottom: 20px;">📋 INFORMASI MODIFIER</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>🔵 PUBLIC MODIFIER</h3>
+                        <ul>
+                            <li>✓ Semua Class</li>
+                            <li>✓ Semua Constructor</li>
+                            <li>✓ Method: hitungLuas()</li>
+                            <li>✓ Method: hitungKeliling()</li>
+                            <li>✓ Method: tampilkanInfo()</li>
+                            <li>✓ Method: getter/setter</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>🟠 PROTECTED MODIFIER</h3>
+                        <ul>
+                            <li>• nama (BangunDatar)</li>
+                            <li>• sisi (Persegi)</li>
+                            <li>• panjang (PersegiPanjang)</li>
+                            <li>• lebar (PersegiPanjang)</li>
+                            <li>• alas (Segitiga)</li>
+                            <li>• tinggi (Segitiga)</li>
+                            <li>• sisiA/B/C (Segitiga)</li>
+                            <li>• jariJari (Lingkaran)</li>
+                            <li>• PHI (Lingkaran)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>📊 INHERITANCE</h3>
+                        <ul>
+                            <li>↑ Persegi → BangunDatar</li>
+                            <li>↑ PersegiPanjang → BangunDatar</li>
+                            <li>↑ Segitiga → BangunDatar</li>
+                            <li>↑ Lingkaran → BangunDatar</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>⚡ FITUR PROGRAM</h3>
+                        <ul>
+                            <li>• Switch Case Selection</li>
+                            <li>• Nested Switch (Segitiga)</li>
+                            <li>• Validasi Input</li>
+                            <li>• Perhitungan Luas & Keliling</li>
+                            <li>• Constructor Overloading</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>© 2024 - Program Kalkulator Bangun Datar</p>
+                <p>NIM: [ISI NIM ANDA] | NAMA: [ISI NAMA ANDA]</p>
+                <p style="font-size: 0.9em; margin-top: 10px;">Keterangan:
+                    <span class="badge badge-protected">protected</span> = Protected Modifier |
+                    <span class="badge badge-public">public</span> = Public Modifier |
+                    <i>«abstract»</i> = Abstract Method/Class
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animasi sederhana
+        document.addEventListener('DOMContentLoaded', function() {
+            const boxes = document.querySelectorAll('.class-box, .abstract-class');
+            boxes.forEach((box, index) => {
+                box.style.opacity = '0';
+                box.style.transform = 'translateY(20px)';
+                box.style.transition = 'all 0.5s ease';
+
+                setTimeout(() => {
+                    box.style.opacity = '1';
+                    box.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

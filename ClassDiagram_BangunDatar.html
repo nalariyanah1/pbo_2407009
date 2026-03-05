@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Class Diagram Bangun Datar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 32px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .parent-class {
+            width: 350px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border: 3px solid #4834d4;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(72, 52, 212, 0.3);
+        }
+
+        .child-classes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .child {
+            width: 280px;
+            background: white;
+            border: 3px solid #6ab04c;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(106, 176, 76, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .child:hover {
+            transform: translateY(-5px);
+        }
+
+        .class-header {
+            background: rgba(0,0,0,0.05);
+            padding: 15px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+
+        .parent-class .class-header {
+            background: linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+            color: white;
+        }
+
+        .child .class-header {
+            background: linear-gradient(135deg, #6ab04c 0%, #badc58 100%);
+            color: white;
+        }
+
+        .class-body {
+            padding: 20px;
+        }
+
+        .section {
+            margin: 15px 0;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+
+        .attribute, .method {
+            font-family: 'Courier New', monospace;
+            padding: 8px 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .protected {
+            border-left: 4px solid #f39c12;
+        }
+
+        .private {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .public {
+            border-left: 4px solid #3498db;
+        }
+
+        .modifier {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 25px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .modifier-protected {
+            background: #f39c12;
+        }
+
+        .modifier-private {
+            background: #e74c3c;
+        }
+
+        .modifier-public {
+            background: #3498db;
+        }
+
+        .arrow {
+            font-size: 40px;
+            color: #666;
+        }
+
+        .legend {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .legend h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 30px;
+            padding: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .badge-protected { background: #f39c12; }
+        .badge-private { background: #e74c3c; }
+        .badge-public { background: #3498db; }
+
+        .inheritance-line {
+            position: relative;
+            width: 2px;
+            height: 40px;
+            background: #666;
+            margin: 10px auto;
+        }
+
+        .inheritance-line::after {
+            content: '▲';
+            position: absolute;
+            top: -15px;
+            left: -8px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 CLASS DIAGRAM - BANGUN DATAR</h1>
+
+        <div class="diagram">
+            <!-- Parent Class -->
+            <div class="parent-class">
+                <div class="class-header">BangunDatar</div>
+                <div class="class-body">
+                    <div class="section">
+                        <div class="section-title">Attributes</div>
+                        <div class="attribute protected">
+                            <span class="modifier modifier-protected">#</span> Luas: double
+                        </div>
+                        <div class="attribute protected">
+                            <span class="modifier modifier-protected">#</span> Keliling: double
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">Methods</div>
+                        <div class="method public">
+                            <span class="modifier modifier-public">+</span> getLuas(): double
+                        </div>
+                        <div class="method public">
+                            <span class="modifier modifier-public">+</span> getKeliling(): double
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inheritance-line"></div>
+            <div style="font-weight: bold; color: #666;">INHERITANCE</div>
+            <div class="inheritance-line" style="transform: rotate(180deg);"></div>
+
+            <!-- Child Classes -->
+            <div class="child-classes">
+                <!-- Persegi Panjang -->
+                <div class="child">
+                    <div class="class-header">PersegiPanjang</div>
+                    <div class="class-body">
+                        <div class="section">
+                            <div class="section-title">Attributes</div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> Panjang: double
+                            </div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> Lebar: double
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Methods</div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> setData(p:double, l:double)
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> hitung()
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> tampilDiagram()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segitiga -->
+                <div class="child">
+                    <div class="class-header">Segitiga</div>
+                    <div class="class-body">
+                        <div class="section">
+                            <div class="section-title">Attributes</div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> alas: double
+                            </div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> tinggi: double
+                            </div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> a: double
+                            </div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> b: double
+                            </div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> c: double
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Methods</div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> setData(a,t,s1,s2,s3)
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> hitung()
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> tampilDiagram()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lingkaran -->
+                <div class="child">
+                    <div class="class-header">Lingkaran</div>
+                    <div class="class-body">
+                        <div class="section">
+                            <div class="section-title">Attributes</div>
+                            <div class="attribute private">
+                                <span class="modifier modifier-private">-</span> r: double
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Methods</div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> setLari(r: double)
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> hitung()
+                            </div>
+                            <div class="method public">
+                                <span class="modifier modifier-public">+</span> tampilDiagram()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h3>📋 LEGEND MODIFIER:</h3>
+            <div class="legend-item">
+                <span class="badge badge-protected">#</span> Protected (dapat diakses oleh turunan)
+            </div>
+            <div class="legend-item">
+                <span class="badge badge-private">-</span> Private (hanya dalam class sendiri)
+            </div>
+            <div class="legend-item">
+                <span class="badge badge-public">+</span> Public (dapat diakses semua)
+            </div>
+        </div>
+
+        <!-- Inheritance Info -->
+        <div style="margin-top: 30px; padding: 20px; background: #e8f4f8; border-radius: 15px;">
+            <h3 style="color: #333;">📊 INHERITANCE:</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="padding: 8px; font-size: 16px;">🔹 PersegiPanjang → BangunDatar</li>
+                <li style="padding: 8px; font-size: 16px;">🔹 Segitiga → BangunDatar</li>
+                <li style="padding: 8px; font-size: 16px;">🔹 Lingkaran → BangunDatar</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2024 - Program Kalkulator Bangun Datar</p>
+            <p>NIM: [ISI NIM ANDA] | NAMA: [ISI NAMA ANDA]</p>
+        </div>
+    </div>
+
+    <script>
+        // Animasi sederhana
+        document.querySelectorAll('.child').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease';
+
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, i * 200);
+        });
+    </script>
+</body>
+</html>
